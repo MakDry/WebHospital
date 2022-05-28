@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app version="3.1">
+  <display-name>WebHospital</display-name>
+
+  <resource-ref>
+    <description>DB Connection</description>
+    <res-ref-name>jdbc/webHospital</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+    <res-auth>Container</res-auth>
+  </resource-ref>
+</web-app>
