@@ -1,4 +1,4 @@
-package EPAM.hospital.SL.model;
+package EPAM.hospital.SL.entity;
 
 public class UserAccount {
     private String login;

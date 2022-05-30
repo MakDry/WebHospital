@@ -1,7 +1,7 @@
 package EPAM.hospital.DAL.DoctorDAO;
 
 import EPAM.hospital.DAL.dao.DoctorDAO;
-import EPAM.hospital.SL.model.Doctor;
+import EPAM.hospital.SL.entity.Doctor;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;

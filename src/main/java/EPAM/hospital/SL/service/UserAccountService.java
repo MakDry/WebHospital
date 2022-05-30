@@ -1,7 +1,7 @@
 package EPAM.hospital.SL.service;
 
 import EPAM.hospital.DAL.dao.UserAccountDAO;
-import EPAM.hospital.SL.model.UserAccount;
+import EPAM.hospital.SL.entity.UserAccount;
 
 import java.util.List;
 

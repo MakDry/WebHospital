@@ -1,7 +1,7 @@
 package EPAM.hospital.DAL.dao;
 
-import EPAM.hospital.SL.model.Doctor;
-import EPAM.hospital.SL.model.Patient;
+import EPAM.hospital.SL.entity.Doctor;
+import EPAM.hospital.SL.entity.Patient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,7 +1,7 @@
 package EPAM.hospital.SL.service;
 
 import EPAM.hospital.DAL.dao.PatientDAO;
-import EPAM.hospital.SL.model.Patient;
+import EPAM.hospital.SL.entity.Patient;
 
 import java.util.List;
 

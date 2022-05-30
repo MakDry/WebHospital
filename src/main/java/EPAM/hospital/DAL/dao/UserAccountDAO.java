@@ -1,6 +1,6 @@
 package EPAM.hospital.DAL.dao;
 
-import EPAM.hospital.SL.model.UserAccount;
+import EPAM.hospital.SL.entity.UserAccount;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

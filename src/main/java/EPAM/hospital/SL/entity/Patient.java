@@ -1,4 +1,4 @@
-package EPAM.hospital.SL.model;
+package EPAM.hospital.SL.entity;
 
 import java.sql.Date;
 
