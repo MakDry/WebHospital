@@ -2,6 +2,9 @@
 
 <web-app version="3.1">
   <display-name>WebHospital</display-name>
+  <welcome-file-list>
+    <welcome-file>login.jsp</welcome-file>
+  </welcome-file-list>
 
   <resource-ref>
     <description>DB Connection</description>
