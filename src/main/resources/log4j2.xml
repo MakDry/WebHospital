@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Configuration status="warn">
+<Appenders>
+    <File name="FileLogger" fileName="resources/logs/app.log">
+        <PatternLayout>
+            <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+        </PatternLayout>
+    </File>
+</Appenders>
+<Loggers>
+    <!-- avoid duplicated logs with additivity=false -->
+    <Logger name="EPAM.hospital.DAL" level="debug" additivity="false">
+        <AppenderRef ref="FileLogger"/>
+    </Logger>
+    <Root level="error">
+        <AppenderRef ref="FileLogger"/>
+    </Root>
+</Loggers>
+</Configuration>

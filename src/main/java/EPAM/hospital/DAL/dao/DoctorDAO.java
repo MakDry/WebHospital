@@ -1,13 +1,17 @@
 package EPAM.hospital.DAL.dao;
 
-import EPAM.hospital.SL.entity.Doctor;
-import EPAM.hospital.SL.entity.Patient;
+import EPAM.hospital.SL.model.Doctor;
+import EPAM.hospital.SL.model.Patient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DoctorDAO extends BaseDAO<Doctor, Integer> {
+
+    private static final Logger logger = LoggerFactory.getLogger(DoctorDAO.class);
     private enum DoctorRequest {
         SQL_SELECT_DOCTORS("SELECT * FROM doctors"),
         SQL_FIND_DOCTORS_PATIENTS("SELECT " +
@@ -43,7 +47,7 @@ public class DoctorDAO extends BaseDAO<Doctor, Integer> {
             ResultSet rs = st.executeQuery(DoctorRequest.SQL_SELECT_DOCTORS.request);
             findDoctors = handleResultForDoctor(rs);
         } catch (SQLException e) {
-                                                               // NEED LOGGING HERE
+            logger.warn(e.getMessage());
         }
         return findDoctors;
     }
@@ -58,13 +62,13 @@ public class DoctorDAO extends BaseDAO<Doctor, Integer> {
             ResultSet rs = ps.executeQuery();
             doctor = handleResultForDoctor(rs);
         } catch (SQLException e) {
-                                                                 // NEED LOGGING HERE
+            logger.warn(e.getMessage());
         }
         return doctor;
     }
 
     @Override
-    public boolean add(Doctor doctor) throws SQLException {
+    public boolean add(Doctor doctor) {
         try (Connection connection = super.getConnection()) {
             PreparedStatement ps = connection.prepareStatement(DoctorRequest.SQL_ADD_DOCTOR.request);
             ps.setString(1, doctor.getAccount().getLogin());
@@ -74,7 +78,7 @@ public class DoctorDAO extends BaseDAO<Doctor, Integer> {
             ps.setInt(5, doctor.getCategory().getIndex());
             ps.executeUpdate();
         } catch (SQLException e) {
-                                                                                  // NEED LOGGING HERE
+            logger.warn(e.getMessage());
         }
         return true;
     }
@@ -89,7 +93,7 @@ public class DoctorDAO extends BaseDAO<Doctor, Integer> {
             ps.setString(2, doctorLogin);
             ps.executeUpdate();
         } catch (SQLException e) {
-                                                                                  // NEED LOGGING HERE
+            logger.warn(e.getMessage());
         }
         return true;
     }
@@ -103,7 +107,7 @@ public class DoctorDAO extends BaseDAO<Doctor, Integer> {
             ResultSet rs = ps.executeQuery();
             doctors = handleResultForDoctor(rs);
         } catch (SQLException e) {
-                                                                 // NEED LOGGING HERE
+              logger.warn(e.getMessage());
         }
         return doctors;
     }
@@ -127,7 +131,7 @@ public class DoctorDAO extends BaseDAO<Doctor, Integer> {
                 patients.add(patient);
             }
         } catch (SQLException e) {
-                                                                 // NEED LOGGING HERE
+            logger.warn(e.getMessage());
         }
         return patients;
     }
@@ -141,6 +145,7 @@ public class DoctorDAO extends BaseDAO<Doctor, Integer> {
             doctor.setSurname(rs.getString("surname"));
             doctor.setName(rs.getString("name"));
             doctor.setPatronymic(rs.getString("patronymic"));
+            doctor.getAccount().setLogin(rs.getString("login"));
             doctor.setCategory(rs.getInt("category"));
             List<Patient> patients = getDoctorsPatients(id);
             doctor.setPatients(patients);

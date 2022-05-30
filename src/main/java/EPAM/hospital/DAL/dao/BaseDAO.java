@@ -8,12 +8,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 public abstract class BaseDAO<T, K> {
-
     private ConnectionBuilder connectionBuilder = new PoolConnectionBuilder();
-    public abstract List<T> findAll() throws SQLException;
-    public abstract List<T> get(K parameter) throws SQLException;
-    public abstract boolean add(T entity) throws SQLException;
-    public abstract boolean remove(K parameter) throws SQLException;
+    public abstract List<T> findAll();
+    public abstract List<T> get(K parameter);
+    public abstract boolean add(T entity);
+    public abstract boolean remove(K parameter);
     protected Connection getConnection() throws SQLException {
         return connectionBuilder.getConnection();
     }

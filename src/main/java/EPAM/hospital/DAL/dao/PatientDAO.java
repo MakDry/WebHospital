@@ -1,13 +1,18 @@
 package EPAM.hospital.DAL.dao;
 
-import EPAM.hospital.SL.entity.MedicalCard;
-import EPAM.hospital.SL.entity.Patient;
+import EPAM.hospital.SL.model.MedicalCard;
+import EPAM.hospital.SL.model.Patient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PatientDAO extends BaseDAO<Patient, Integer> {
+
+    private static final Logger logger = LoggerFactory.getLogger(PatientDAO.class);
+
     private enum PatientRequest {
         SQL_SELECT_PATIENTS("SELECT P.id, surname, name, patronymic, date_of_birth, " +
                 "MC.diagnosis, procedures, medicines, operations " +
@@ -39,6 +44,7 @@ public class PatientDAO extends BaseDAO<Patient, Integer> {
             this.request = request;
         }
     }
+
     @Override
     public List<Patient> findAll() {
         List<Patient> patients = new ArrayList<>();
@@ -48,7 +54,7 @@ public class PatientDAO extends BaseDAO<Patient, Integer> {
             ResultSet rs = st.executeQuery(PatientRequest.SQL_SELECT_PATIENTS.request);
             patients = handleResultForPatient(rs);
         } catch (SQLException e) {
-                                                                       // NEED LOGGING HERE
+            logger.warn(e.getMessage());
         }
         return patients;
     }
@@ -63,13 +69,13 @@ public class PatientDAO extends BaseDAO<Patient, Integer> {
             ResultSet rs = ps.executeQuery();
             patient = handleResultForPatient(rs);
         } catch (SQLException e) {
-                                                                      // NEED LOGGING HERE
+            logger.warn(e.getMessage());
         }
         return patient;
     }
 
     @Override
-    public boolean add(Patient patient) throws SQLException {
+    public boolean add(Patient patient) {
         try (Connection connection = super.getConnection()) {
             addMedicalCard();
             int medCardId = getPatientCardId();
@@ -82,7 +88,7 @@ public class PatientDAO extends BaseDAO<Patient, Integer> {
             ps.setDate(5, patient.getDateOfBirth());
             ps.executeUpdate();
         } catch (SQLException e) {
-                                                                      // NEED LOGGING HERE
+            logger.warn(e.getMessage());
         }
         return true;
     }
@@ -98,7 +104,7 @@ public class PatientDAO extends BaseDAO<Patient, Integer> {
             ps.executeUpdate();
             removeMedicalCard(patient.getMedicalCard().getId());
         } catch (SQLException e) {
-                                                                             // NEED LOGGING HERE
+            logger.warn(e.getMessage());
         }
         return true;
     }
@@ -110,7 +116,7 @@ public class PatientDAO extends BaseDAO<Patient, Integer> {
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(PatientRequest.SQL_SELECT_MEDICAL_CARDS.request);
 
-            while(rs.next()) {
+            while (rs.next()) {
                 lastMedCardId = rs.getInt("id");
             }
         }
@@ -137,7 +143,7 @@ public class PatientDAO extends BaseDAO<Patient, Integer> {
             ps.setInt(5, patient.getMedicalCard().getId());
             ps.executeUpdate();
         } catch (SQLException e) {
-                                                                                          // NEED LOGGING HERE
+            logger.warn(e.getMessage());
         }
         return true;
     }

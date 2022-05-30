@@ -1,13 +1,16 @@
 package EPAM.hospital.DAL.dao;
 
-import EPAM.hospital.SL.entity.MedicalCard;
-import EPAM.hospital.SL.entity.UserAccount;
+import EPAM.hospital.SL.model.UserAccount;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserAccountDAO extends BaseDAO<UserAccount, String> {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserAccountDAO.class);
 
     private enum UserAccountRequest {
         SQL_SELECT_ACCOUNTS("SELECT * " +
@@ -32,7 +35,7 @@ public class UserAccountDAO extends BaseDAO<UserAccount, String> {
             ResultSet rs = st.executeQuery(UserAccountRequest.SQL_SELECT_ACCOUNTS.request);
             accounts = handleResultForUserAccount(rs);
         } catch (SQLException e) {
-                                                                                        // NEED LOGGING HERE
+            logger.warn(e.getMessage());
         }
         return accounts;
     }
@@ -47,25 +50,25 @@ public class UserAccountDAO extends BaseDAO<UserAccount, String> {
             ResultSet rs = ps.executeQuery();
             account = handleResultForUserAccount(rs);
         } catch (SQLException e) {
-                                                                               // NEED LOGGING HERE
+            logger.warn(e.getMessage());
         }
         return account;
     }
 
     @Override
-    public boolean add(UserAccount entity) throws SQLException {
+    public boolean add(UserAccount entity) {
         return false;
     }
 
     @Override
-    public boolean remove(String parameter) throws SQLException {
+    public boolean remove(String parameter) {
         return false;
     }
 
     private List<UserAccount> handleResultForUserAccount(ResultSet rs) throws SQLException {
         List<UserAccount> accounts = new ArrayList<>();
 
-        while(rs.next()) {
+        while (rs.next()) {
             UserAccount account = new UserAccount();
 
             account.setLogin(rs.getString("login"));

@@ -1,5 +1,7 @@
 package EPAM.hospital.DAL.connections;
 
+import org.slf4j.*;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -8,6 +10,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class PoolConnectionBuilder implements ConnectionBuilder {
+    private static final Logger logger = LoggerFactory.getLogger(PoolConnectionBuilder.class);
     private DataSource resource;
 
     public PoolConnectionBuilder() {
@@ -15,7 +18,7 @@ public class PoolConnectionBuilder implements ConnectionBuilder {
             Context context = new InitialContext();
             resource = (DataSource) context.lookup("java:comp/env/jdbc/webHospital");
         } catch (NamingException e) {
-            e.printStackTrace();                                 // USE LOGGER THERE
+            logger.warn(e.getMessage());
         }
     }
 
