@@ -1,48 +1,58 @@
 package EPAM.hospital.SL.entity;
 
-public class Doctor extends User {
-    private int id;
-    private String surname;
-    private String name;
-    private String patronymic;
+import java.util.List;
 
-    public Doctor(String login, String password, ROLE role, String surname, String name, String patronymic) {
-        super(login, password, role);
-        this.surname = surname;
-        this.name = name;
-        this.patronymic = patronymic;
+public class Doctor extends Person {
+
+    private UserAccount account;
+    private CATEGORY category;
+    private List<Patient> patients;
+
+    // Конструткор для додавання нових лікарів
+    public Doctor(String surname, String name, String patronymic, int categoryIndex) {
+        super(surname, name, patronymic);
+        category = getCategoryByIndex(categoryIndex);
     }
 
-    public int getId() {
-        return id;
+    public Doctor() {
+        super(null, null, null);                          // SHOULD BE REWRITTEN
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public UserAccount getAccount() {
+        return account;
     }
 
-    public String getSurname() {
-        return surname;
+    public void setAccount(String login, String password, int roleId) {
+        this.account = new UserAccount(login, password, roleId);
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public CATEGORY getCategory() {
+        return category;
     }
 
-    public String getName() {
-        return name;
+    public void setCategory(int index) {
+        category = getCategoryByIndex(index);
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public List<Patient> getPatients() {
+        return patients;
     }
 
-    public String getPatronymic() {
-        return patronymic;
+    public void setPatients(List<Patient> patients) {
+        this.patients = patients;
     }
 
-    public void setPatronymic(String patronymic) {
-        this.patronymic = patronymic;
+    private CATEGORY getCategoryByIndex(int index) {
+        if (index == 1){
+            return CATEGORY.PEDIATRICIAN;
+        } else if (index == 2) {
+            return CATEGORY.TRAUMA_SURGEON;
+        } else if (index == 3){
+            return CATEGORY.SURGEON;
+        } else if (index == 4) {
+            return CATEGORY.NURSE;
+        }
+        return null;                                        // REPLACE IT
     }
 
     public enum CATEGORY {
@@ -51,8 +61,8 @@ public class Doctor extends User {
         SURGEON(3, "Хірург"),
         NURSE(4, "Медсестра");
 
-        private int index;
-        private String description;
+        private final int index;
+        private final String description;
 
         CATEGORY(int index, String description) {
             this.index = index;
@@ -65,19 +75,6 @@ public class Doctor extends User {
 
         public String getDescription() {
             return description;
-        }
-
-        public CATEGORY getCategoryByIndex(int index) {
-            if (index == 1){
-                return CATEGORY.PEDIATRICIAN;
-            } else if (index == 2) {
-                return CATEGORY.TRAUMA_SURGEON;
-            } else if (index == 3){
-                return CATEGORY.SURGEON;
-            } else if (index == 4) {
-                return CATEGORY.NURSE;
-            }
-            return null;                                        // REPLACE IT
         }
     }
 }

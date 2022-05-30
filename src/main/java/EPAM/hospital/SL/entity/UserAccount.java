@@ -1,17 +1,17 @@
 package EPAM.hospital.SL.entity;
 
-public abstract class User {
+public class UserAccount {
     private String login;
     private String password;
     private ROLE role;
 
-    protected User(String login, String password, ROLE role) {
+    public UserAccount(String login, String password, int roleId) {
         this.login = login;
         this.password = password;
-        this.role = role;
+        this.role = getRoleByIndex(roleId);
     }
 
-    protected User() {
+    public UserAccount() {
         login = "unknown";
         password = "unknown";
         role = ROLE.UNKNOWN;
@@ -37,10 +37,19 @@ public abstract class User {
         return role;
     }
 
-    public void setRole(ROLE role) {
-        this.role = role;
+    public void setRole(int roleIndex) {
+        role = getRoleByIndex(roleIndex);
     }
 
+    public ROLE getRoleByIndex(int index) {
+        if (index == 1){
+            return ROLE.ADMIN;
+        } else if (index == 2) {
+            return ROLE.USER;
+        } else {
+            return ROLE.UNKNOWN;
+        }
+    }
     public enum ROLE {
         ADMIN(1), USER(2), UNKNOWN(3);
 
@@ -52,16 +61,6 @@ public abstract class User {
 
         public int getIndex() {
             return index;
-        }
-
-        public ROLE getRoleByIndex(int index) {
-            if (index == 1){
-                return ROLE.ADMIN;
-            } else if (index == 2) {
-                return ROLE.USER;
-            } else {
-                return ROLE.UNKNOWN;
-            }
         }
     }
 }

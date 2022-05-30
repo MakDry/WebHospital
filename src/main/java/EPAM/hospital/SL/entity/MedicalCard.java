@@ -7,14 +7,23 @@ public class MedicalCard {
     private String medicines;
     private String operations;
 
-    public MedicalCard(String diagnosis, String procedures, String medicines, String operations) {
+    public MedicalCard(int id, String diagnosis, String procedures, String medicines, String operations) {
+        this.id = id;
         this.diagnosis = diagnosis;
         this.procedures = procedures;
         this.medicines = medicines;
         this.operations = operations;
     }
 
-    public MedicalCard() {
+    public MedicalCard() {                            // SHOULD BE REWRITTEN
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDiagnosis() {

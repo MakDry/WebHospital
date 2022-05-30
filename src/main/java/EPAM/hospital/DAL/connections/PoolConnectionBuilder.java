@@ -15,7 +15,7 @@ public class PoolConnectionBuilder implements ConnectionBuilder {
             Context context = new InitialContext();
             resource = (DataSource) context.lookup("java:comp/env/jdbc/webHospital");
         } catch (NamingException e) {
-            e.printStackTrace(); // USE LOGGER THERE
+            e.printStackTrace();                                 // USE LOGGER THERE
         }
     }
 
